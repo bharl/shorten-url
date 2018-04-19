@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>shorten-url</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+
+  <body class="text-center">
+    <form class="form-shorten">
+      <h1 class="h1 mb-2 font-weight-normal">please type an url</h1>
+      <div class="input-group input-group-lg mb-3">
+      <input id="url-field" type="text" class="form-control" placeholder="Your original URL here" aria-label="Your original URL here" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-shorten btn-outline-secondary" type="button">shorten</button>
+      </div>
+    </div>
+    
+    <div class="h4" id="url"></div>
+    <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+  <script>
+  $('.btn-shorten').on('click', function(){
+    $.ajax({
+      url: '/api/',
+      type: 'POST',
+      dataType: 'JSON',
+      data: {url: $('#url-field').val()},
+      success: function(data){
+          var resultHTML = '<a class="result" href="' + data.url + '">' + data.url + '</a>';
+          $('#url').html(resultHTML);
+          $('#url').hide().fadeIn('slow');
+      }
+    });
+    $("#url-field").val('Your original URL here');
+  });
+  </script>
+
+  </body>
+</html>
