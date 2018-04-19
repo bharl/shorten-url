@@ -3,17 +3,14 @@ const db 	     = require('../db/database');
 const bodyParser = require('body-parser');
 const app 	     = express();
 
-const dictionary = "0123456789ABCDEF";
+const dictionary = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 const base = dictionary.length;
 
 exports.createShortURL = (req, res) => {
 	var long_url = req.body.url;
-	db.select().from('data').where( {long_url: long_url} )
+	db.insert({ long_url: long_url, created_at: new Date().toUTCString() }).returning('*').into('data')
 		.then(data => {
-			db.insert({ long_url: long_url, created_at: new Date().toUTCString() }).returning('*').into('data')
-				.then(data => {
-					res.json( {ok: true, url: "localhost:3000/api/" + encodeURL(data[0].id) }) //fix address later
-				});
+			res.status(200).json( {ok: true, url: req.get('host') + '/' + encodeURL(data[0].id) });
 		})
 		.catch(err => {
 			console.log(err);
