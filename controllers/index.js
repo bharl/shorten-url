@@ -1,7 +1,7 @@
 const express    = require('express');
-const db 	     = require('../db/database');
+const db         = require('../db/database');
 const bodyParser = require('body-parser');
-const app 	     = express();
+const app        = express();
 
 const dictionary = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 const base = dictionary.length;
@@ -41,6 +41,6 @@ const decodeURL = (str) => {
 }
 
 const encodeURL = (num) => {
-	return (!num) ? "".split("").reverse().join("") 
+	return (!num) ? ""
 		: encodeURL(Math.floor(num / base)) + dictionary[num % base].toString();
 };
