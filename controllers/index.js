@@ -12,7 +12,7 @@ exports.createShortURL = (req, res) => {
 		.then(data => {
 			db.insert({ long_url: long_url, created_at: new Date().toUTCString() }).returning('*').into('data')
 				.then(data => {
-					res.json( {ok: true, url: "localhost:3000/api" + encodeURL(data[0].id) }) //fix address later
+					res.json( {ok: true, url: "localhost:3000/api/" + encodeURL(data[0].id) }) //fix address later
 				});
 		})
 		.catch(err => {
