@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('*', function(req, res) {
-	res.status(404).send('Page not found!');
+	res.sendFile(path.join(__dirname, 'public/404.html'));
 });
 
 app.listen(port, () => {
